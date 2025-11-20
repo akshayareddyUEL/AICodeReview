@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Code Review</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Code Review</h1>
+            <p>Upload or paste your Python code for AI-powered analysis</p>
+        </header>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <div class="content">
+                <div class="input-section">
+                    <div class="input-options">
+                        <button type="button" class="option-btn {% if input_method == 'paste' %}active{% endif %}" 
+                                onclick="setInputMethod('paste')">Paste Code</button>
+                        <button type="button" class="option-btn {% if input_method == 'upload' %}active{% endif %}" 
+                                onclick="setInputMethod('upload')">Upload File</button>
+                        <input type="hidden" id="input_method" name="input_method" value="{{ input_method }}">
+                    </div>
+                    
+                    <div id="paste-section" class="input-area {% if input_method != 'paste' %}hidden{% endif %}">
+                        <textarea id="code-input" name="code" placeholder="Paste your Python code here...">{{ code_content }}</textarea>
+                    </div>
+                    
+                    <div id="upload-section" class="input-area {% if input_method != 'upload' %}hidden{% endif %}">
+                        <div class="upload-area">
+                            <div class="upload-content">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4a5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                                <p>Choose your .py file to upload</p>
+                                <input type="file" name="file" accept=".py" class="file-input">
+                                {% if filename %}
+                                    <p class="file-selected">Selected: {{ filename }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="analyze-btn">Analyze Code</button>
+                </div>
+                
+                <div class="results-section">
+                    <div class="result-block">
+                        <h3>Error Detection</h3>
+                        <div class="result-content">
+                            {% if analysis_results %}
+                                {% for error in analysis_results.errors %}
+                                    <div class="error-item">{{ error }}</div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="placeholder">Submit code to see errors</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="result-block">
+                        <h3>Generate Comments</h3>
+                        <div class="result-content">
+                            {% if analysis_results %}
+                                {% for comment in analysis_results.comments %}
+                                    <div class="comment-item">{{ comment }}</div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="placeholder">Submit code to generate comments</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="result-block">
+                        <h3>Overall Review</h3>
+                        <div class="result-content">
+                            {% if analysis_results %}
+                                <p>{{ analysis_results.review }}</p>
+                            {% else %}
+                                <p class="placeholder">Submit code for overall review</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        // Minimal JavaScript just for tab switching (can be removed if you want pure CSS solution)
+        function setInputMethod(method) {
+            document.getElementById('input_method').value = method;
+            
+            // Update button states
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Show/hide sections
+            document.getElementById('paste-section').classList.toggle('hidden', method !== 'paste');
+            document.getElementById('upload-section').classList.toggle('hidden', method !== 'upload');
+        }
+    </script>
+</body>
+</html>
