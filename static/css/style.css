@@ -235,3 +235,159 @@ header p {
         height: 300px;
     }
 }
+/* Gauge/Pie Chart Styles */
+.rating-display {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.gauge-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.gauge {
+    width: 120px;
+    height: 60px;
+    position: relative;
+    margin: 0 auto 15px;
+    overflow: hidden;
+}
+
+.gauge-background {
+    width: 120px;
+    height: 120px;
+    border: 15px solid #e2e8f0;
+    border-bottom: none;
+    border-radius: 120px 120px 0 0;
+    position: absolute;
+    bottom: 0;
+}
+
+.gauge-fill {
+    width: 120px;
+    height: 120px;
+    border: 15px solid;
+    border-bottom: none;
+    border-radius: 120px 120px 0 0;
+    position: absolute;
+    bottom: 0;
+    transform-origin: center bottom;
+    transition: transform 1s ease-in-out;
+}
+
+.gauge-cover {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 2;
+    min-width: 60px;
+    text-align: center;
+}
+
+.gauge-label {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.9rem;
+}
+
+.rating-details {
+    text-align: center;
+}
+
+.quality-label {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.quality-label.poor { background: #fed7d7; color: #c53030; }
+.quality-label.needs-improvement { background: #feebc8; color: #dd6b20; }
+.quality-label.average { background: #fefcbf; color: #d69e2e; }
+.quality-label.good { background: #c6f6d5; color: #276749; }
+.quality-label.excellent { background: #9ae6b4; color: #22543d; }
+
+.review-text {
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border-left: 4px solid #4299e1;
+}
+
+.review-text p {
+    line-height: 1.6;
+    color: #4a5568;
+    margin: 0;
+}
+
+/* Alternative Pie Chart Style */
+.pie-chart-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.pie-chart {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #e53e3e 0% 10%,
+        #ed8936 10% 30%,
+        #ecc94b 30% 50%,
+        #48bb78 50% 70%,
+        #38a169 70% 100%
+    );
+    margin: 0 auto 15px;
+    position: relative;
+}
+
+.pie-chart-mask {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Score Breakdown */
+.score-breakdown {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.score-item {
+    text-align: center;
+}
+
+.score-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.score-label {
+    font-size: 0.8rem;
+    color: #718096;
+}
