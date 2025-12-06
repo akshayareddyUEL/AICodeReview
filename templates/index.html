@@ -79,7 +79,34 @@
                         <h3>Overall Review</h3>
                         <div class="result-content">
                             {% if analysis_results %}
-                                <p>{{ analysis_results.review }}</p>
+                                <div class="rating-display">
+                                    <div class="gauge-container">
+                                        <div class="gauge">
+                                            <div class="gauge-background"></div>
+                                            <div class="gauge-cover">{{ analysis_results.rating }}/10</div>
+                                        </div>
+                                        <div class="gauge-label">Code Quality Score</div>
+                                    </div>
+                                    
+                                    <div class="rating-details">
+                                        <div class="quality-label {{ analysis_results.rating|rating_class }}">
+                                            {% if analysis_results.rating >= 9 %}
+                                                Excellent
+                                            {% elif analysis_results.rating >= 7 %}
+                                                Good
+                                            {% elif analysis_results.rating >= 5 %}
+                                                Average
+                                            {% elif analysis_results.rating >= 3 %}
+                                                Needs Improvement
+                                            {% else %}
+                                                Poor
+                                            {% endif %}
+                                        </div>
+                                        <div class="review-text">
+                                            <p>{{ analysis_results.review }}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             {% else %}
                                 <p class="placeholder">Submit code for overall review</p>
                             {% endif %}
@@ -91,20 +118,40 @@
     </div>
 
     <script type="text/javascript">
-        // Minimal JavaScript just for tab switching (can be removed if you want pure CSS solution)
         function setInputMethod(method) {
             document.getElementById('input_method').value = method;
             
-            // Update button states
             document.querySelectorAll('.option-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
             
-            // Show/hide sections
             document.getElementById('paste-section').classList.toggle('hidden', method !== 'paste');
             document.getElementById('upload-section').classList.toggle('hidden', method !== 'upload');
         }
+
+        // Animate gauge after page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const gauges = document.querySelectorAll('.gauge');
+            gauges.forEach(gauge => {
+                const rating = parseFloat(gauge.querySelector('.gauge-cover').textContent.split('/')[0]);
+                const percentage = (rating / 10) * 180; // Convert to degrees (half circle)
+                
+                // Create the gauge fill element
+                const gaugeFill = document.createElement('div');
+                gaugeFill.className = 'gauge-fill';
+                gaugeFill.style.transform = `rotate(${percentage}deg)`;
+                
+                // Add color based on rating
+                if (rating >= 9) gaugeFill.style.background = '#38a169';
+                else if (rating >= 7) gaugeFill.style.background = '#48bb78';
+                else if (rating >= 5) gaugeFill.style.background = '#ecc94b';
+                else if (rating >= 3) gaugeFill.style.background = '#ed8936';
+                else gaugeFill.style.background = '#e53e3e';
+                
+                gauge.insertBefore(gaugeFill, gauge.querySelector('.gauge-cover'));
+            });
+        });
     </script>
 </body>
 </html>
