@@ -26,5 +26,5 @@ Institution - University of East London
 | Akshaya Reddy   | Core Fuctionality Development |
 | Bibek karna   | UI Developement  |
 | Mahendranath Chowdary |  Styles & UI Development  |
-| Sai Ram vunnam | | Documentation & Deployment |
+| Sai Ram vunnam |  Documentation & Deployment  |
 
